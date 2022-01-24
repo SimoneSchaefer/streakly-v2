@@ -195,7 +195,8 @@ export class GoalService {
     }
 
     private resetStreakIfNeeded(store: StoreModel) {
-        if (store.currentStreak.week < moment().week()) {
+        const logStatusForLastWeek = store.weeklyAchievementLog.find(log => log.week === (moment().week() - 1)) || { reached: REACHED.FAILED};
+        if (logStatusForLastWeek.reached === REACHED.FAILED) {
             store.currentStreak = { value: 0, week: moment().week() }
         }
     }
